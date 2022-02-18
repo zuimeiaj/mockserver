@@ -1,0 +1,16 @@
+{
+  "post:user/login": {
+    "code": 200,
+    "msg": "操作成功",
+    "data": {
+      "token": "Token.1---21212",
+      "name": "Jack Li"
+    }
+  },
+  "post:user/info": {
+    "code": 200,
+    "data": {
+      "name": "Jack"
+    }
+  }
+}
