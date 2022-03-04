@@ -1,13 +1,31 @@
 1. 使用规范
 
+```js
+    npm install lib-mock-server --save-dev
+```
+
+```js
+    //mock.server.js
+    const mockServer = require('lib-mock-server')
+    const server =  mockServer({...})
+```
+
+```js
+start server: node mock.server.js
+```
+
 - config.js 配置说明：
 
-| 字段   | 说明                                                                                                      |
-| ------ | --------------------------------------------------------------------------------------------------------- |
-| api    | 请求接口的 baseURL ,mock 会将接口的 baseURL 去掉，再去寻找 mock 数据源                                    |
-| target | 后备接口地址，如果 mock 没有数据源，则会继续请求该接口地址 ，参考 http-proxy createProxyServer 第三个参数 |
+| 字段        | 说明                                                                                                      |
+| ----------- | --------------------------------------------------------------------------------------------------------- |
+| baseURL     | 请求接口的 baseURL ,mock 会将接口的 baseURL 去掉，再去寻找 mock 数据源                                    |
+| proxy       | 后备接口地址，如果 mock 没有数据源，则会继续请求该接口地址 ，参考 http-proxy createProxyServer 第三个参数 |
+| port        | 服务启动端口，默认为 8510                                                                                 |
+| contentType | 数据返回格式，默认为 application/json;utf-8                                                               |
+| sleep       | 模拟请求延时，默认为 ()=> 0.1                                                                             |
+| mockDir     | 数据源目录，服务将在此目录下匹配数据                                                                      |
 
-2. json 文件命名规范
+2.  json 文件命名规范
 
 文件命名以接口地址 baseurl 后，第一个斜杠前名称为准
 
