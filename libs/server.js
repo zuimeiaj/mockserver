@@ -36,6 +36,30 @@ async function onRequest({ req, res, config, callback }) {
   }
 }
 
+function getProxyTarget(url, config) {
+  // 直接配置目标服务地址
+  if (config.target) {
+    return config;
+  }
+
+  // 可根据前缀匹配目标服务
+  const prefix = Object.keys(config).find((prefix) => {
+    return url.startsWith(prefix);
+  });
+
+  return config[prefix];
+}
+
+function rewritePath(req, config) {
+  if (config.pathRewrite) {
+    for (let key in config.pathRewrite) {
+      let original = req.url;
+      req.url = req.url.replace(new RegExp(key), config.pathRewrite[key]);
+      console.log("path rewrite:", original, "=>", req.url);
+    }
+  }
+}
+
 module.exports = {
   createServer: (config = {}) => {
     const proxyServer = proxy.createProxyServer({});
@@ -46,8 +70,19 @@ module.exports = {
         config: { ...defaults, ...config },
         callback: () => {
           //没有找到mock数据，继续请求服务
-          if (config.target) proxyServer.web(req, res, config.target);
-          else res.end(JSON.stringify({ code: 200, data: "Not implemented" }));
+          const target = getProxyTarget(req.url, config.proxy);
+          if (target) {
+            rewritePath(req, target);
+            console.log("proxy to:", target.target + req.url);
+            proxyServer.web(req, res, target);
+          } else
+            res.end(
+              JSON.stringify({
+                code: 200,
+                data: "Not implemented",
+                url: req.url,
+              })
+            );
         },
       })
     );

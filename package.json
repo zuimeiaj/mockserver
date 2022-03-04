@@ -1,24 +1,26 @@
 {
-  "name": "lib-mock-server-test",
-  "version": "1.0.0",
+  "name": "lib-mock-server",
+  "version": "1.0.7",
   "description": "基于mockjs+json描述文件的模拟数据，支持RESTful风格",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/index.js"
   },
   "files": [
     "libs",
     "index.js",
-    "readme.md"
+    "readme.md",
+    "test"
   ],
   "keywords": [
     "mockjson"
   ],
   "author": "zuimeiaj",
   "license": "MIT",
-  "devDependencies": {
-    "http-proxy": "^1.18.1",
-    "lib-mock-server": "^1.0.0",
+  "dependencies": {
     "mockjs": "^1.1.0"
+  },
+  "devDependencies": {
+    "http-proxy": "^1.18.1"
   }
 }

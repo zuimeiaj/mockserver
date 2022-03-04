@@ -1,12 +1,16 @@
 const http = require("http");
-const mockServer = require("lib-mock-server");
+const mockServer = require("../index");
 const path = require("path");
 const server = mockServer({
   port: 8890,
   baseURL: "/api/",
   mockDir: path.resolve(__dirname, "../mock"),
-  target: {
-    target: "http://127.0.0.1:9000",
+  proxy: {
+    timeout: 1000,
+    target: "http://47.108.55.94:30999",
+    pathRewrite: {
+      "^/api": "",
+    },
   },
 });
 
@@ -48,8 +52,10 @@ async function execTestApi() {
   res = await request("/api/user/info");
   console.assert(res.data.name === "Jack", "error:user/info");
   // 没有模拟数据将继续请求
-  res = await request("/api/empty");
-  console.assert(res.data === "proxy", "error:empty");
+  res = await request("/api/code");
+  // proxy
+  console.log();
+  console.assert(res.data.repCode === "0000", "error:empty");
   server.close();
 }
 
