@@ -1,10 +1,14 @@
 {
   "name": "lib-mock-server",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "基于mockjs+json描述文件的模拟数据，支持RESTful风格",
   "main": "index.js",
   "scripts": {
     "test": "node test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zuimeiaj/mockserver.git"
   },
   "files": [
     "libs",

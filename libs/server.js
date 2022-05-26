@@ -63,6 +63,16 @@ function rewritePath(req, config) {
 module.exports = {
   createServer: (config = {}) => {
     const proxyServer = proxy.createProxyServer({});
+    // 监听错误，避免崩溃
+    proxyServer.on("error", (error, req, res) => {
+      res.end(
+        JSON.stringify({
+          code: 500,
+          data: "Server error",
+          msg: error.message,
+        })
+      );
+    });
     const server = http.createServer((req, res) =>
       onRequest({
         req,
