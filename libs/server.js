@@ -62,7 +62,14 @@ function rewritePath(req, config) {
 
 module.exports = {
   createServer: (config = {}) => {
-    const proxyServer = proxy.createProxyServer({});
+    const proxyServer = proxy.createProxyServer({
+      secure: false,
+      changeOrigin: true,
+      protocolRewrite: "http",
+      headers: {
+        "X-Forwarded-Proto": "http",
+      },
+    });
     // 监听错误，避免崩溃
     proxyServer.on("error", (error, req, res) => {
       res.end(
